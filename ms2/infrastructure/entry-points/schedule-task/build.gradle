@@ -1,0 +1,8 @@
+dependencies {
+    implementation project(':model')
+    implementation project(':usecase')
+    implementation 'org.springframework:spring-context'
+    implementation 'org.slf4j:slf4j-api:1.7.28'
+
+
+}

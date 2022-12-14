@@ -10,3 +10,5 @@ include ':api-rest'
 project(':api-rest').projectDir = file('./infrastructure/entry-points/api-rest')
 include ':jpa-repository'
 project(':jpa-repository').projectDir = file('./infrastructure/driven-adapters/jpa-repository')
+include ':schedule-task'
+project(':schedule-task').projectDir = file('./infrastructure/entry-points/schedule-task')

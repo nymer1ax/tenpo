@@ -10,6 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder(toBuilder = true)
 public class HistoricalData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

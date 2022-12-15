@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
 import java.net.ConnectException;
-import java.rmi.RemoteException;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -19,6 +18,7 @@ public class AddTwoNumbersUseCase {
     public Double  addTwoNumbers(int num1, int num2) throws IOException {
 
         Double percentage = null;
+
         try {
             percentage = getPercentageUseCase.getPercentageValue().getValue();
         }catch (ConnectException ex){

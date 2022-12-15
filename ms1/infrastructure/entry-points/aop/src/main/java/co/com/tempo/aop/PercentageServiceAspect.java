@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,16 +21,17 @@ public class PercentageServiceAspect {
     @Autowired
     private PercentageRepository percentageRepository;
 
-//    @Before("execution(* ms1.infrastructure.driven.adapters.rest.consumer.co.com.tempo.consumer.percentage.PercentageConsumerRepository.getPercentageValue())")
-//    public void beforeGetPercentageValue() {
-//        log.info("Se va a invocar GetPercentageValue()");
-//    }
 
-@Pointcut("execution(* co.com.tempo.consumer.percentage.RestPercentageAdapter.getPercentageValue())")
-public void getPercentageValuePointcut() {}
+    @Pointcut("execution(* co.com.tempo.consumer.percentage.RestPercentageAdapter.getPercentageValue())")
+    public void getPercentageValuePointcut() {}
 
 
-    //@AfterReturning(value = "execution(* ms1.infrastructure.driven.adapters.rest.consumer.co.com.tempo.consumer.percentage.PercentageConsumerRepository.getPercentageValue())" ,returning = "result")
+    @Before(value = "getPercentageValuePointcut()")
+    public void beforeGetPercentageValue() {
+        log.info("La función GetPercentageValue(): va a ser invocada:");
+    }
+
+
     @AfterReturning(value = "getPercentageValuePointcut()" ,returning = "result")
     public void afterGetPercentageValue(JoinPoint joinPoint, Percentage result) throws IOException {
 
@@ -40,7 +42,7 @@ public void getPercentageValuePointcut() {}
         }
 
         if(result==null) {
-            log.info("El resultado de getValue es Null");
+            log.info("La función GetPercentageValue(): su valor es Nulo. ");
         }
 
     }

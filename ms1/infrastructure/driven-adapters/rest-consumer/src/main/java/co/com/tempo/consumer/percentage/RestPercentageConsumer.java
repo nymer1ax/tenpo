@@ -63,10 +63,11 @@ public class RestPercentageConsumer {
 
             while (!responseOK && tryCount < 3) {
                 try {
+                    log.info("Intentando request.. " );
                     response = chain.proceed(request);
                     responseOK = response.isSuccessful();
                 }catch (Exception e){
-                    log.info("Request is not successful - " + tryCount);
+                    log.info("Request is not successful - " + tryCount+1);
                     try {
                         Thread.sleep(3000);
                     } catch (InterruptedException ex) {
@@ -77,12 +78,10 @@ public class RestPercentageConsumer {
                 }
             }
 
-            // otherwise just pass the original response on
-
             if(response == null){
                 throw new ConnectException("La conexión ha fallado");
             }
-
+            log.info("Se ha ejecutado el request con exíto.. " );
             return response;
 
 

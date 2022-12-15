@@ -6,6 +6,9 @@ import co.com.tempo.usecase.addtwonumbers.AddTwoNumbersUseCase;
 import co.com.tempo.usecase.getpercentage.GetPercentageUseCase;
 import co.com.tempo.usecase.historicallist.HistoricalListUseCase;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +48,6 @@ public class ApiRest {
 
     }
 
-
     @GetMapping(path = "/sum")
     public ResponseEntity<Response> sum(@RequestParam(required = true) @Valid Integer num1, @RequestParam(required = true)  @Valid Integer num2 ) throws IOException {
 
@@ -63,16 +65,20 @@ public class ApiRest {
     }
 
     @GetMapping(path = "/historical")
-    public ResponseEntity<Response> historical(){
+    public ResponseEntity<Response> historical(@RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "10") int size){
 
         List<Historical> lista = historicalListUseCase.historicalListOfCalls();
+
+        Page<Historical> pageList = new PageImpl<Historical>(lista, PageRequest.of(page,
+                size), lista.size());
 
         Response response = Response.builder()
                 .codigoResultado("200")
                 .descripcionRespuesta("OK")
                 .fecha(LocalDateTime.now().toString())
                 .endpoint("/api/historical")
-                .result(lista).build();
+                .result(pageList).build();
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
 

@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.json.JSONObject;
 
@@ -27,6 +28,7 @@ public class RestPercentageConsumer {
             .build();
 
     private final PercentageURL percentageURL;
+
 
     public PercentageResponse getPercentage() throws IOException {
 

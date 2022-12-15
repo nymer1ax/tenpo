@@ -26,5 +26,5 @@ public class PercentageResponse {
     private Date fecha;
 
     @JsonProperty("result")
-    private double result;
+    private Double result;
 }

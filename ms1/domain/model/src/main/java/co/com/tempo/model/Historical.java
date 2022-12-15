@@ -10,7 +10,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Percentage {
-    private Double value;
+public class Historical {
+    private String endpoint;
+    private String message;
+    private String statusCode;
+    private String result;
     private Date createdAt;
 }

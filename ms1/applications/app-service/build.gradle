@@ -1,6 +1,7 @@
 apply plugin: 'org.springframework.boot'
 
 dependencies {
+	implementation project( ':aop')
 	implementation 'org.reactivecommons.utils:object-mapper:0.1.0'
 	implementation project( ':jpa-repository')
 	implementation project( ':rest-consumer')

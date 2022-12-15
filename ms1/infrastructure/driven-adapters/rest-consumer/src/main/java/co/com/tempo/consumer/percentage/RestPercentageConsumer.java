@@ -59,17 +59,16 @@ public class RestPercentageConsumer {
             Request request = chain.request();
             Response response = null;
             boolean responseOK = false;
-            int tryCount = 0;
-
-            while (!responseOK && tryCount < 3) {
+            int tryCount = 1;
+            while (!responseOK && tryCount < 4) {
                 try {
                     log.info("Intentando request.. " );
                     response = chain.proceed(request);
                     responseOK = response.isSuccessful();
                 }catch (Exception e){
-                    log.info("Request is not successful - " + tryCount+1);
+                    log.info("Request is not successful:  # " + tryCount);
                     try {
-                        Thread.sleep(3000);
+                        Thread.sleep(1500);
                     } catch (InterruptedException ex) {
                         throw new RuntimeException(ex);
                     }

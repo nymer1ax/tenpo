@@ -9,6 +9,8 @@ import co.com.tempo.model.gateway.PercentageRepository;
 import org.reactivecommons.utils.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 
@@ -23,6 +25,7 @@ public class PercentageDataAdapter extends AdapterOperations<Percentage, Percent
     }
 
     @Override
+    @Transactional
     public Percentage savePercentage(Percentage percentage) {
         PercentageData p = this.repository.saveAndFlush(percentageMapper.percentageToPercentageData(percentage));
         return percentageMapper.percentageDataToPercentage(p);

@@ -2,6 +2,7 @@ package co.com.tempo.usecase.addtwonumbers;
 
 import co.com.tempo.model.Percentage;
 import co.com.tempo.model.gateway.PercentageRepository;
+import co.com.tempo.usecase.Exceptions.custom.ConnectionErrorException;
 import co.com.tempo.usecase.getpercentage.GetPercentageUseCase;
 import lombok.RequiredArgsConstructor;
 
@@ -34,7 +35,7 @@ public class AddTwoNumbersUseCase {
             pct = lasInsert.map(Percentage::getValue).orElse(0.0);
 
             if(pct.equals(0.0)){
-                throw new RuntimeException("No se ha encontrado el dato de pct");
+                throw new ConnectionErrorException("La conexión con el servicio ha fallado: No se ha encontrado el valor del pct");
             }
 
             return addNumbersAndPercentage(num1, num2, pct);

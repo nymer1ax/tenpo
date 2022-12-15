@@ -5,6 +5,10 @@ import co.com.tempo.usecase.Exceptions.Response;
 import co.com.tempo.usecase.addtwonumbers.AddTwoNumbersUseCase;
 import co.com.tempo.usecase.getpercentage.GetPercentageUseCase;
 import co.com.tempo.usecase.historicallist.HistoricalListUseCase;
+import io.github.bucket4j.Bandwidth;
+import io.github.bucket4j.Bucket;
+import io.github.bucket4j.Bucket4j;
+import io.github.bucket4j.Refill;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,6 +29,9 @@ import java.util.List;
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST, RequestMethod.PUT})
 @RequiredArgsConstructor
 public class ApiRest {
+
+
+
 
     private final AddTwoNumbersUseCase addTwoNumbersUseCase;
 

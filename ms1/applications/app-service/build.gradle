@@ -11,6 +11,9 @@ dependencies {
     implementation project(':usecase')
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
+    // https://mvnrepository.com/artifact/com.github.vladimir-bukhtoyarov/bucket4j-core
+    implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:7.6.0'
+
     runtimeOnly('org.springframework.boot:spring-boot-devtools')
 }
 

@@ -1,9 +1,10 @@
 package co.com.tempo.api.handlingexception;
 
 import co.com.tempo.usecase.Exceptions.Response;
-import co.com.tempo.usecase.Exceptions.custom.ConnectionErrorException;
 import co.com.tempo.usecase.Exceptions.custom.CustomException;
 import co.com.tempo.usecase.Exceptions.custom.NoContentException;
+import co.com.tempo.usecase.Exceptions.custom.TooManyRequestsException;
+import io.github.bucket4j.Bucket;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,9 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import java.net.ConnectException;
 import java.time.LocalDateTime;
@@ -24,6 +27,34 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+
+    private static final int MAX_REQUESTS_PER_MINUTE = 3;
+    private final Bucket bucket;
+
+    public GlobalExceptionHandler(Bucket bucket) {
+        this.bucket = bucket;
+    }
+    @ModelAttribute
+    public void rateLimit(HttpServletRequest request) throws TooManyRequestsException {
+        // Check if the rate limit has been exceeded
+        if (!bucket.tryConsume(MAX_REQUESTS_PER_MINUTE)) {
+            throw new TooManyRequestsException("Has superado los 3 request per minute. Intentalo más tarde");
+        }
+    }
+
+    @ExceptionHandler(TooManyRequestsException.class)
+    public ResponseEntity<Response> handleTooManyRequests(TooManyRequestsException ex) {
+
+        Response response = Response.builder()
+                .fecha(LocalDateTime.now().toString())
+                .codigoResultado("TOO_MANY_REQUEST")
+                .descripcionRespuesta(ex.getMessage())
+                .endpoint(ex.getClass().getSimpleName())
+                .result(Collections.emptyList())
+                .build();
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(response);
+    }
 
     @ExceptionHandler(value = {CustomException.class})
     public ResponseEntity<Response> custom(CustomException ex){

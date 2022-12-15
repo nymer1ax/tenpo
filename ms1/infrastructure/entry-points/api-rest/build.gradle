@@ -9,6 +9,9 @@ dependencies {
     implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
     implementation group: 'org.springframework.data', name: 'spring-data-commons', version: '2.7.2'
     implementation 'org.springframework.boot:spring-boot-starter-validation:2.4.0'
+    // https://mvnrepository.com/artifact/com.github.vladimir-bukhtoyarov/bucket4j-core
+    implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:7.6.0'
+
 
 }
 

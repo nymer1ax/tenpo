@@ -19,12 +19,14 @@ public class HistoricalData {
     @Column(name = "endpoint")
     private String endpoint;
 
+    @Lob
     @Column(name = "message")
     private String message;
 
     @Column(name = "status_code")
     private String statusCode;
 
+    @Lob
     @Column(name = "result")
     private String result;
 

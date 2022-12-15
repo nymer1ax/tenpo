@@ -13,7 +13,7 @@ public class GetPercentageUseCase {
     public Percentage getPercentageValue() throws IOException {
 
         if(percentageRepository.getPercentageValue() == null){
-            throw new ConnectException("No se pudo obtener el valor del procentaje!");
+            throw new ConnectException("No se pudo obtener el valor del procentaje. Ha ocurrido un error en la conexión.");
         }
         return percentageRepository.getPercentageValue();
     }

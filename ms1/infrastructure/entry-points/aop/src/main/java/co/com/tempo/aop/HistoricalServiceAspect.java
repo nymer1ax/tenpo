@@ -50,16 +50,30 @@ public class HistoricalServiceAspect {
 
             Response r = result.getBody();
 
-            Historical historical = Historical.builder()
-                    .message(r.getDescripcionRespuesta())
-                    .endpoint(r.getEndpoint())
-                    .statusCode(r.getCodigoResultado())
-                    .createdAt(new Date())
-                    .result(r.getResult().toString())
-                    .build();
+            if(!r.getEndpoint().equals("/api/historical")){
+                Historical historical = Historical.builder()
+                        .message(r.getDescripcionRespuesta())
+                        .endpoint(r.getEndpoint())
+                        .statusCode(r.getCodigoResultado())
+                        .createdAt(new Date())
+                        .result(r.getResult().toString())
+                        .build();
 
-            historicalRepository.saveHistorical(historical);
-            log.info("Elemento insertado en la BD: Se ha guardado un al historico: El servicio" + r.getEndpoint() + "con su resultado: " + r.getResult());
+                historicalRepository.saveHistorical(historical);
+            }
+
+            if(r.getEndpoint().equals("/api/historical")) {
+                Historical historical = Historical.builder()
+                        .message(r.getDescripcionRespuesta())
+                        .endpoint(r.getEndpoint())
+                        .statusCode(r.getCodigoResultado())
+                        .createdAt(new Date())
+                        .result(r.getDescripcionRespuesta())
+                        .build();
+                historicalRepository.saveHistorical(historical);
+            }
+
+            log.info("Elemento insertado en la BD: Se ha guardado un al historico: El servicio " + r.getEndpoint() + "con su resultado:  " + r.getResult());
         }
 
     }

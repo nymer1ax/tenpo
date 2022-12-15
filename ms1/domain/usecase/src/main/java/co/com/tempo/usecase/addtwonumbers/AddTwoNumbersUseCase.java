@@ -6,6 +6,7 @@ import co.com.tempo.usecase.getpercentage.GetPercentageUseCase;
 import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.rmi.RemoteException;
 import java.util.Optional;
 
@@ -17,13 +18,18 @@ public class AddTwoNumbersUseCase {
 
     public Double  addTwoNumbers(int num1, int num2) throws IOException {
 
-        Double percentage = getPercentageUseCase.getPercentageValue().getValue();
+        Double percentage = null;
+        try {
+            percentage = getPercentageUseCase.getPercentageValue().getValue();
+        }catch (ConnectException ex){
+            percentage = 0.0;
+        }
 
        Optional<Percentage> lasInsert = percentageRepository.getLastPercentageInsert();
 
         Double pct = 0.0;
 
-        if(percentage == null){
+        if(percentage == 0.0){
 
             pct = lasInsert.map(Percentage::getValue).orElse(0.0);
 

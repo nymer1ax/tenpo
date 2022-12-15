@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 import org.json.JSONObject;
 
 import java.io.IOException;
-
-
+import java.net.ConnectException;
 
 
 @Service
@@ -37,7 +36,13 @@ public class RestPercentageConsumer {
 
         Request request = percentageURL.generateRequest(httpUrl).newBuilder().get().build();
 
-        Response response = client.newCall(request).execute();
+        Response response = null;
+
+        try {
+             response = client.newCall(request).execute();
+        }catch (ConnectException ex){
+            return null;
+        }
 
         String jsonData = response.body().string();
 
@@ -63,7 +68,7 @@ public class RestPercentageConsumer {
                 }catch (Exception e){
                     log.info("Request is not successful - " + tryCount);
                     try {
-                        Thread.sleep(2500);
+                        Thread.sleep(3000);
                     } catch (InterruptedException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -73,7 +78,12 @@ public class RestPercentageConsumer {
             }
 
             // otherwise just pass the original response on
-            return response == null ? chain.proceed(request) : response;
+
+            if(response == null){
+                throw new ConnectException("La conexión ha fallado");
+            }
+
+            return response;
 
 
         }

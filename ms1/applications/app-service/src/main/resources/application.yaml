@@ -8,7 +8,7 @@ spring:
   profiles:
     include: null
   datasource:
-    url: "jdbc:postgresql://localhost:5432/msone"
+    url: "jdbc:postgresql://host.docker.internal:5432/msone"
     username: "postgres"
     password: "password"
     driverClassName: "org.postgresql.Driver"
@@ -27,3 +27,4 @@ management:
 adapter:
   restconsumer:
     url: "http://localhost:8090/api"
+    docker: "http://host.docker.internal:8090/api"

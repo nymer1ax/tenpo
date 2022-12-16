@@ -20,8 +20,9 @@ public class ScheduleTask {
 
     private final PercentageRepository repository;
 
-    //@Scheduled(cron = "0 0/30 * * * ?")
-    @Scheduled(fixedRate = 60000)
+    
+    //@Scheduled(fixedRate = 60000)
+    @Scheduled(cron = "0 0/30 * * * ?")
     public void scheduledGenerateRandomPercentage() throws ParseException {
 
         double random = generateRandomPercentage();

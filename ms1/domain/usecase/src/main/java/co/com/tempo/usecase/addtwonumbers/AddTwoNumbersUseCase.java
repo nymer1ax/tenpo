@@ -35,7 +35,7 @@ public class AddTwoNumbersUseCase {
             pct = lasInsert.map(Percentage::getValue).orElse(0.0);
 
             if(pct.equals(0.0)){
-                throw new ConnectionErrorException("La conexión con el servicio ha fallado: No se ha encontrado el valor del pct");
+                throw new ConnectException("La conexión con el servicio ha fallado: No se ha encontrado el valor del pct");
             }
 
             return addNumbersAndPercentage(num1, num2, pct);

@@ -86,12 +86,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Response> connection(NoContentException ex){
         Response response = Response.builder()
                 .fecha(LocalDateTime.now().toString())
-                .codigoResultado("SERVICE_UNAVAILABLE")
+                .codigoResultado("NO_CONTENT")
                 .descripcionRespuesta(ex.getMessage())
                 .endpoint(ex.getClass().getSimpleName())
                 .result(Collections.emptyList())
                 .build();
-        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 
 

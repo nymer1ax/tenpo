@@ -12,7 +12,9 @@ services:
     depends_on:
       - dbone
     networks:
-    - netmsone   
+    - netmsone 
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  
   dbone:
     image: postgres
     ports:
@@ -23,6 +25,8 @@ services:
       - POSTGRES_DB=msone
     networks:
       - netmsone
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  
   mstwo:
     image: mstwo
     container_name: mstwo
@@ -30,7 +34,9 @@ services:
       context: ./ms2
       dockerfile: Dockerfile
     ports:
-      - "8090:8090"   
+      - "8090:8090"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   
 networks:
   netmsone:
     driver: bridge

@@ -28,15 +28,11 @@ public class RestPercentageConsumer {
 
     public PercentageResponse getPercentage() throws IOException {
 
-        HttpUrl httpUrl = percentageURL.generateUrl().newBuilder().addPathSegment("percentage")
-                .build();
-
+     
         Request request = new Request.Builder()
                 .url("http://host.docker.internal:8090/api/percentage")
                 .build();        
             
-       // Request request = percentageURL.generateRequest(r).newBuilder().get().build();
-
         Response response = null;
 
         try {
